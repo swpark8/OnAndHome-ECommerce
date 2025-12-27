@@ -77,7 +77,7 @@
 
 <br>
 
-## 6. 12/27/2025 보완한 점 (Maintenance & Optimization)
+##  12/27/2025 보완한 점 (Maintenance & Optimization)
 
 ### ① 상품 상태 관리 시스템 고도화 (Advanced Product Status Control)
 - **문제 인식:** 기존 시스템은 재고(`stock`) 수치에만 의존하여 상품 노출을 제어하는 한계가 있었음.
