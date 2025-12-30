@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import advertisementApi from "../../api/advertisementApi";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminSidebar from "../../components/layout/AdminSidebar";
 import "./AdvertisementList.css";
 
 const AdvertisementList = () => {
@@ -25,8 +25,8 @@ const AdvertisementList = () => {
         setAdvertisements(response.advertisements);
       }
     } catch (error) {
-      console.error("광고 목록 조회 실패:", error);
-      toast.error("광고 목록을 불러오는데 실패했습니다.");
+      console.error("광고 목록 조회 ?�패:", error);
+      toast.error("광고 목록??불러?�는???�패?�습?�다.");
     } finally {
       setLoading(false);
     }
@@ -64,26 +64,26 @@ const AdvertisementList = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("정말 삭제하시겠습니까?")) {
+    if (!window.confirm("?�말 ??��?�시겠습?�까?")) {
       return;
     }
 
     try {
       const response = await advertisementApi.delete(id);
       if (response.success) {
-        toast.success("광고가 삭제되었습니다.");
+        toast.success("광고가 ??��?�었?�니??");
         fetchAdvertisements();
       }
     } catch (error) {
-      console.error("광고 삭제 실패:", error);
-      toast.error("광고 삭제에 실패했습니다.");
+      console.error("광고 ??�� ?�패:", error);
+      toast.error("광고 ??��???�패?�습?�다.");
     }
   };
 
   const handleSendNotification = async (id, title) => {
     if (
       !window.confirm(
-        `'${title}' 광고 알림을 발송하시겠습니까?\n마케팅 동의한 사용자에게만 전송됩니다.`
+        `'${title}' 광고 ?�림??발송?�시겠습?�까?\n마�????�의???�용?�에게만 ?�송?�니??`
       )
     ) {
       return;
@@ -96,8 +96,8 @@ const AdvertisementList = () => {
         fetchAdvertisements();
       }
     } catch (error) {
-      console.error("광고 알림 발송 실패:", error);
-      toast.error("광고 알림 발송에 실패했습니다.");
+      console.error("광고 ?�림 발송 ?�패:", error);
+      toast.error("광고 ?�림 발송???�패?�습?�다.");
     }
   };
 
@@ -119,7 +119,7 @@ const AdvertisementList = () => {
       <div className="admin-dashboard">
         <AdminSidebar />
         <div className="dashboard-main">
-          <div className="loading">로딩중...</div>
+          <div className="loading">로딩�?..</div>
         </div>
       </div>
     );
@@ -132,9 +132,9 @@ const AdvertisementList = () => {
       <div className="dashboard-main">
         <div className="notice-container">
           <div className="notice-header">
-            <h1>광고 관리</h1>
+            <h1>광고 관�?/h1>
             <p className="notice-description">
-              마케팅 동의 사용자에게 전송할 광고를 관리합니다
+              마�????�의 ?�용?�에�??�송??광고�?관리합?�다
             </p>
           </div>
 
@@ -142,44 +142,44 @@ const AdvertisementList = () => {
             <div className="search-box">
               <input
                 type="text"
-                placeholder="제목 또는 내용으로 검색..."
+                placeholder="?�목 ?�는 ?�용?�로 검??.."
                 value={searchTerm}
                 onChange={handleSearch}
                 className="search-input"
               />
-              <span className="search-icon">🔍</span>
+              <span className="search-icon">?��</span>
             </div>
             <button onClick={handleCreate} className="btn-write">
-              ✏️ 광고 등록
+              ?�️ 광고 ?�록
             </button>
           </div>
 
           <div className="advertisement-stats">
             <div className="stat-item">
-              <span className="stat-label">전체 광고</span>
-              <span className="stat-value">{advertisements.length}개</span>
+              <span className="stat-label">?�체 광고</span>
+              <span className="stat-value">{advertisements.length}�?/span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">활성 광고</span>
+              <span className="stat-label">?�성 광고</span>
               <span className="stat-value">
-                {advertisements.filter((ad) => ad.active).length}개
+                {advertisements.filter((ad) => ad.active).length}�?
               </span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">발송된 광고</span>
+              <span className="stat-label">발송??광고</span>
               <span className="stat-value">
-                {advertisements.filter((ad) => ad.sentAt).length}개
+                {advertisements.filter((ad) => ad.sentAt).length}�?
               </span>
             </div>
           </div>
 
           <div className="notice-count">
-            전체 {filteredAdvertisements.length}건
+            ?�체 {filteredAdvertisements.length}�?
           </div>
 
           {currentAdvertisements.length === 0 ? (
             <div className="empty-state">
-              <p>등록된 광고가 없습니다.</p>
+              <p>?�록??광고가 ?�습?�다.</p>
             </div>
           ) : (
             <>
@@ -187,10 +187,10 @@ const AdvertisementList = () => {
                 <thead>
                   <tr>
                     <th style={{ width: "80px" }}>번호</th>
-                    <th>제목</th>
-                    <th style={{ width: "120px" }}>작성자</th>
-                    <th style={{ width: "120px" }}>작성일</th>
-                    <th style={{ width: "250px" }}>관리</th>
+                    <th>?�목</th>
+                    <th style={{ width: "120px" }}>?�성??/th>
+                    <th style={{ width: "120px" }}>?�성??/th>
+                    <th style={{ width: "250px" }}>관�?/th>
                   </tr>
                 </thead>
                 <tbody>
@@ -203,10 +203,10 @@ const AdvertisementList = () => {
                       <td className="title-cell">
                         <span className="title-text">{ad.title}</span>
                         {!ad.active && (
-                          <span className="status-badge inactive">비활성</span>
+                          <span className="status-badge inactive">비활??/span>
                         )}
                         {ad.sentAt && (
-                          <span className="status-badge sent">발송완료</span>
+                          <span className="status-badge sent">발송?�료</span>
                         )}
                       </td>
                       <td>관리자</td>
@@ -227,13 +227,13 @@ const AdvertisementList = () => {
                             className="btn-action btn-edit"
                             onClick={() => handleEdit(ad.id)}
                           >
-                            수정
+                            ?�정
                           </button>
                           <button
                             className="btn-action btn-delete"
                             onClick={() => handleDelete(ad.id)}
                           >
-                            삭제
+                            ??��
                           </button>
                         </div>
                       </td>
@@ -256,7 +256,7 @@ const AdvertisementList = () => {
                     disabled={currentPage === 1}
                     className="page-btn"
                   >
-                    이전
+                    ?�전
                   </button>
 
                   {[...Array(totalPages)].map((_, i) => (
@@ -276,14 +276,14 @@ const AdvertisementList = () => {
                     disabled={currentPage === totalPages}
                     className="page-btn"
                   >
-                    다음
+                    ?�음
                   </button>
                   <button
                     onClick={() => handlePageChange(totalPages)}
                     disabled={currentPage === totalPages}
                     className="page-btn"
                   >
-                    마지막
+                    마�?�?
                   </button>
                 </div>
               )}
@@ -296,3 +296,4 @@ const AdvertisementList = () => {
 };
 
 export default AdvertisementList;
+

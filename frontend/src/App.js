@@ -12,16 +12,15 @@ import { initializeAuth } from "./store/slices/userSlice";
 import { useWebSocket } from "./hooks/useWebSocket";
 
 // 레이아웃
-import AdminLayout from "./components/layout/AdminLayout";
-import UserLayout from "./components/layout/UserLayout";
+import { AdminLayout, UserLayout } from "./components/layout";
 
 // 사용자 페이지
 import Cart from "./pages/user/Cart";
-import Home from "./pages/user/Home";
-import Login from "./pages/user/Login";
-import KakaoCallback from "./pages/user/KakaoCallback";
-import NaverCallback from "./pages/auth/NaverCallbackPage";
-import GoogleCallback from "./pages/user/GoogleCallback";
+import Home from "./pages/user/home/Home";
+import Login from "./pages/user/auth/Login";
+import KakaoCallback from "./pages/user/auth/KakaoCallback";
+import NaverCallback from "./pages/user/auth/NaverCallbackPage";
+import GoogleCallback from "./pages/user/auth/GoogleCallback";
 import MyInfo from "./pages/user/MyInfo";
 import MyOrders from "./pages/user/MyOrders";
 import MyPage from "./pages/user/MyPage";
@@ -33,8 +32,8 @@ import OrderComplete from "./pages/user/OrderComplete";
 import OrderPayment from "./pages/user/OrderPayment";
 import ProductDetail from "./pages/user/ProductDetail";
 import ProductList from "./pages/user/ProductList";
-import Signup from "./pages/user/Signup";
-import ResetPassword from "./pages/user/ResetPassword";
+import Signup from "./pages/user/auth/Signup";
+import ResetPassword from "./pages/user/auth/ResetPassword";
 
 // 공지사항, Q&A, 리뷰
 import NoticeDetail from "./pages/user/board/NoticeDetail";

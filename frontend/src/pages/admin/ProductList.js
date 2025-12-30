@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminSidebar from '../../components/layout/AdminSidebar';
 import axios from 'axios';
 import './ProductList.css';
 
@@ -16,8 +16,8 @@ const ProductList = () => {
   // API Base URL
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
-  const categories = ['all', 'TV/모니터', 'TV', '에어컨', '냉장고', '세탁기', '주방가전', '전자레인지', '오디오', '냉장고/세탁기', '식기세척기', '청소기', '공기청정기'];
-  const statuses = ['all', '판매중', '품절', '판매중지'];
+  const categories = ['all', 'TV/모니??, 'TV', '?�어�?, '?�장�?, '?�탁�?, '주방가??, '?�자?�인지', '?�디??, '?�장�??�탁�?, '?�기?�척�?, '�?���?, '공기�?���?];
+  const statuses = ['all', '?�매�?, '?�절', '?�매중�?'];
 
   useEffect(() => {
     fetchProducts();
@@ -59,8 +59,8 @@ const ProductList = () => {
         const mappedProducts = response.data.map((product) => ({
           ...product,
           checked: false,
-          // 재고가 0이면 품절, 아니면 백엔드 상태값 유지
-          status: product.stock === 0 ? '품절' : (product.status || '판매중')
+          // ?�고가 0?�면 ?�절, ?�니�?백엔???�태�??��?
+          status: product.stock === 0 ? '?�절' : (product.status || '?�매�?)
         }));
         
         console.log('Mapped products:', mappedProducts);
@@ -71,16 +71,16 @@ const ProductList = () => {
         setProducts([]);
       }
     } catch (error) {
-      console.error('=== 상품 목록 조회 실패 ===');
+      console.error('=== ?�품 목록 조회 ?�패 ===');
       console.error('Error object:', error);
       
       if (error.response) {
         console.error('Response status:', error.response.status);
         console.error('Response data:', error.response.data);
-        alert('상품 목록을 불러오는데 실패했습니다.');
+        alert('?�품 목록??불러?�는???�패?�습?�다.');
       } else if (error.request) {
         console.error('No response received');
-        alert('서버에 연결할 수 없습니다. 서버가 실행 중인지 확인해주세요.');
+        alert('?�버???�결?????�습?�다. ?�버가 ?�행 중인지 ?�인?�주?�요.');
       } else {
         console.error('Error:', error.message);
       }
@@ -104,7 +104,7 @@ const ProductList = () => {
     );
     setProducts(updatedProducts);
     
-    // selectAll 체크박스 상태 업데이트
+    // selectAll 체크박스 ?�태 ?�데?�트
     const allChecked = updatedProducts.every(product => product.checked);
     setSelectAll(allChecked);
   };
@@ -126,11 +126,11 @@ const ProductList = () => {
     const selectedProducts = products.filter(product => product.checked);
     
     if (selectedProducts.length === 0) {
-      alert('삭제할 상품을 선택해주세요.');
+      alert('??��???�품???�택?�주?�요.');
       return;
     }
     
-    if (!window.confirm(`선택한 ${selectedProducts.length}개의 상품을 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.`)) {
+    if (!window.confirm(`?�택??${selectedProducts.length}개의 ?�품????��?�시겠습?�까?\n\n???�업?� ?�돌�????�습?�다.`)) {
       return;
     }
 
@@ -144,7 +144,7 @@ const ProductList = () => {
       const token = localStorage.getItem('accessToken');
       
       if (!token) {
-        alert('로그인이 필요합니다. 다시 로그인해주세요.');
+        alert('로그?�이 ?�요?�니?? ?�시 로그?�해주세??');
         navigate('/admin/login');
         return;
       }
@@ -163,31 +163,31 @@ const ProductList = () => {
       console.log('Delete response:', response.data);
       
       if (response.data && response.data.success) {
-        alert(response.data.message || `${selectedProducts.length}개의 상품이 삭제되었습니다.`);
+        alert(response.data.message || `${selectedProducts.length}개의 ?�품????��?�었?�니??`);
         
-        // 목록 새로고침
+        // 목록 ?�로고침
         await fetchProducts();
         setSelectAll(false);
       } else {
-        alert(response.data.message || '상품 삭제에 실패했습니다.');
+        alert(response.data.message || '?�품 ??��???�패?�습?�다.');
       }
     } catch (error) {
-      console.error('상품 삭제 실패:', error);
+      console.error('?�품 ??�� ?�패:', error);
       
       if (error.response?.status === 401) {
-        alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+        alert('로그?�이 만료?�었?�니?? ?�시 로그?�해주세??');
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         navigate('/admin/login');
       } else if (error.response?.status === 403) {
-        alert('상품 삭제 권한이 없습니다.');
+        alert('?�품 ??�� 권한???�습?�다.');
       } else if (error.response?.status === 404) {
-        alert('일부 상품을 찾을 수 없습니다. 목록을 새로고침합니다.');
+        alert('?��? ?�품??찾을 ???�습?�다. 목록???�로고침?�니??');
         fetchProducts();
       } else if (error.code === 'ERR_NETWORK') {
-        alert('네트워크 오류가 발생했습니다. 서버가 실행 중인지 확인해주세요.');
+        alert('?�트?�크 ?�류가 발생?�습?�다. ?�버가 ?�행 중인지 ?�인?�주?�요.');
       } else {
-        alert('상품 삭제 중 오류가 발생했습니다.');
+        alert('?�품 ??�� �??�류가 발생?�습?�다.');
       }
     } finally {
       setLoading(false);
@@ -195,15 +195,15 @@ const ProductList = () => {
   };
 
   const handleStatusChange = async (productId, currentStatus) => {
-    const newStatus = currentStatus === '판매중' ? '판매중지' : '판매중';
-    console.log(`[DEBUG] 상태 변경 시도: ID=${productId}, 현재=${currentStatus}, 변경=${newStatus}`);
+    const newStatus = currentStatus === '?�매�? ? '?�매중�?' : '?�매�?;
+    console.log(`[DEBUG] ?�태 변�??�도: ID=${productId}, ?�재=${currentStatus}, 변�?${newStatus}`);
     
     try {
       const token = localStorage.getItem('accessToken');
-      console.log("[DEBUG] 토큰 유무:", !!token);
+      console.log("[DEBUG] ?�큰 ?�무:", !!token);
       
       if (!token) {
-        alert('로그인이 필요합니다.');
+        alert('로그?�이 ?�요?�니??');
         navigate('/admin/login');
         return;
       }
@@ -219,36 +219,36 @@ const ProductList = () => {
         }
       );
       
-      console.log("[DEBUG] 상태 변경 응답:", response.data);
+      console.log("[DEBUG] ?�태 변�??�답:", response.data);
       
       if (response.data && response.data.success) {
-        // 로컬 상태 업데이트
+        // 로컬 ?�태 ?�데?�트
         setProducts(products.map(product => 
           product.id === productId ? { ...product, status: newStatus } : product
         ));
-        alert(`상품 상태가 '${newStatus}'(으)로 변경되었습니다.`);
+        alert(`?�품 ?�태가 '${newStatus}'(??�?변경되?�습?�다.`);
       }
     } catch (error) {
-      console.error('상태 변경 실패:', error);
+      console.error('?�태 변�??�패:', error);
       
       if (error.response?.status === 401) {
-        alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+        alert('로그?�이 만료?�었?�니?? ?�시 로그?�해주세??');
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         navigate('/admin/login');
       } else {
-        alert('상태 변경에 실패했습니다.');
+        alert('?�태 변경에 ?�패?�습?�다.');
       }
     }
   };
 
   const getStatusBadgeClass = (status) => {
     switch(status) {
-      case '판매중':
+      case '?�매�?:
         return 'status-active';
-      case '품절':
+      case '?�절':
         return 'status-outofstock';
-      case '판매중지':
+      case '?�매중�?':
         return 'status-inactive';
       default:
         return '';
@@ -269,7 +269,7 @@ const ProductList = () => {
     }
   };
 
-  // 검색어 필터링
+  // 검?�어 ?�터�?
   const filteredProducts = searchTerm.trim() 
     ? products.filter(product => 
         product.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -287,14 +287,14 @@ const ProductList = () => {
           
           <div className="header-controls">
             <button className="add-btn" onClick={handleAddProduct}>
-              + 상품 등록
+              + ?�품 ?�록
             </button>
           </div>
         </div>
 
         {loading && (
           <div className="loading-overlay">
-            <div className="loading-spinner">로딩 중...</div>
+            <div className="loading-spinner">로딩 �?..</div>
           </div>
         )}
 
@@ -307,7 +307,7 @@ const ProductList = () => {
             >
               {categories.map(category => (
                 <option key={category} value={category}>
-                  {category === 'all' ? '전체 카테고리' : category}
+                  {category === 'all' ? '?�체 카테고리' : category}
                 </option>
               ))}
             </select>
@@ -319,7 +319,7 @@ const ProductList = () => {
             >
               {statuses.map(status => (
                 <option key={status} value={status}>
-                  {status === 'all' ? '전체 상태' : status}
+                  {status === 'all' ? '?�체 ?�태' : status}
                 </option>
               ))}
             </select>
@@ -329,11 +329,11 @@ const ProductList = () => {
             <form onSubmit={handleSearch}>
               <input
                 type="text"
-                placeholder="상품명 또는 상품코드를 입력하세요"
+                placeholder="?�품�??�는 ?�품코드�??�력?�세??
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button type="submit" className="search-btn">🔍</button>
+              <button type="submit" className="search-btn">?��</button>
             </form>
           </div>
         </div>
@@ -350,14 +350,14 @@ const ProductList = () => {
                     disabled={filteredProducts.length === 0}
                   />
                 </th>
-                <th>상품코드</th>
-                <th>상품명</th>
+                <th>?�품코드</th>
+                <th>?�품�?/th>
                 <th>카테고리</th>
-                <th>판매가격</th>
-                <th>재고</th>
-                <th>상태</th>
-                <th>등록일</th>
-                <th>관리</th>
+                <th>?�매가�?/th>
+                <th>?�고</th>
+                <th>?�태</th>
+                <th>?�록??/th>
+                <th>관�?/th>
               </tr>
             </thead>
             <tbody>
@@ -375,14 +375,14 @@ const ProductList = () => {
                     <td className="product-name">{product.name || '-'}</td>
                     <td>{product.category || '-'}</td>
                     <td className="price">
-                      {product.price ? product.price.toLocaleString() + '원' : '-'}
+                      {product.price ? product.price.toLocaleString() + '?? : '-'}
                     </td>
                     <td className={`stock ${product.stock === 0 ? 'out-of-stock' : ''}`}>
-                      {product.stock !== undefined ? product.stock + '개' : '-'}
+                      {product.stock !== undefined ? product.stock + '�? : '-'}
                     </td>
                     <td>
                       <span className={`status-badge ${getStatusBadgeClass(product.status)}`}>
-                        {product.status || '판매중'}
+                        {product.status || '?�매�?}
                       </span>
                     </td>
                     <td>{formatDate(product.createdAt)}</td>
@@ -392,13 +392,13 @@ const ProductList = () => {
                           className="edit-btn" 
                           onClick={() => handleEditProduct(product.id)}
                         >
-                          수정
+                          ?�정
                         </button>
                         <button 
                           className="status-change-btn"
                           onClick={() => handleStatusChange(product.id, product.status)}
                         >
-                          {product.status === '판매중' ? '중지' : '재개'}
+                          {product.status === '?�매�? ? '중�?' : '?�개'}
                         </button>
                       </div>
                     </td>
@@ -407,7 +407,7 @@ const ProductList = () => {
               ) : (
                 <tr>
                   <td colSpan="9" className="no-data">
-                    {loading ? '로딩 중...' : '등록된 상품이 없습니다.'}
+                    {loading ? '로딩 �?..' : '?�록???�품???�습?�다.'}
                   </td>
                 </tr>
               )}
@@ -421,17 +421,17 @@ const ProductList = () => {
             onClick={handleDeleteSelected}
             disabled={loading || products.filter(p => p.checked).length === 0}
           >
-            선택 삭제
+            ?�택 ??��
           </button>
           
           <div className="product-summary">
-            <span>총 {filteredProducts.length}개 상품</span>
+            <span>�?{filteredProducts.length}�??�품</span>
             <span className="separator">|</span>
-            <span>판매중: {filteredProducts.filter(p => p.status === '판매중').length}개</span>
+            <span>?�매�? {filteredProducts.filter(p => p.status === '?�매�?).length}�?/span>
             <span className="separator">|</span>
-            <span>품절: {filteredProducts.filter(p => p.status === '품절').length}개</span>
+            <span>?�절: {filteredProducts.filter(p => p.status === '?�절').length}�?/span>
             <span className="separator">|</span>
-            <span>중지: {filteredProducts.filter(p => p.status === '판매중지').length}개</span>
+            <span>중�?: {filteredProducts.filter(p => p.status === '?�매중�?').length}�?/span>
           </div>
         </div>
       </div>
@@ -440,3 +440,4 @@ const ProductList = () => {
 };
 
 export default ProductList;
+

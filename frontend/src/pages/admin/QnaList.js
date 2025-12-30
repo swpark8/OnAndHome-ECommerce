@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminSidebar from "../../components/layout/AdminSidebar";
 import axios from "axios";
 import "./QnaList.css";
 
@@ -28,7 +28,7 @@ const QnaList = () => {
         },
       });
 
-      console.log("Q&A 목록 응답:", response.data);
+      console.log("Q&A 목록 ?�답:", response.data);
 
       if (response.data && Array.isArray(response.data)) {
         setQnaList(response.data);
@@ -38,8 +38,8 @@ const QnaList = () => {
         setQnaList([]);
       }
     } catch (error) {
-      console.error("Q&A 목록 조회 실패:", error);
-      alert("Q&A 목록을 불러오는데 실패했습니다.");
+      console.error("Q&A 목록 조회 ?�패:", error);
+      alert("Q&A 목록??불러?�는???�패?�습?�다.");
       setQnaList([]);
     } finally {
       setLoading(false);
@@ -70,7 +70,7 @@ const QnaList = () => {
     }
   };
 
-  // 검색어 필터링
+  // 검?�어 ?�터�?
   const filteredQnaList = qnaList.filter((qna) => {
     if (!searchKeyword.trim()) return true;
 
@@ -83,7 +83,7 @@ const QnaList = () => {
     );
   });
 
-  // 페이지네이션
+  // ?�이지?�이??
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredQnaList.slice(indexOfFirstItem, indexOfLastItem);
@@ -96,7 +96,7 @@ const QnaList = () => {
   if (loading) {
     return (
       <div className="admin-container">
-        <div className="loading">로딩 중...</div>
+        <div className="loading">로딩 �?..</div>
       </div>
     );
   }
@@ -107,40 +107,40 @@ const QnaList = () => {
 
       <div className="qna-list-main">
         <div className="page-header">
-          <h1>Q&A 관리</h1>
+          <h1>Q&A 관�?/h1>
 
           <div className="search-box">
             <input
               type="text"
-              placeholder="제목 또는 작성자를 입력하세요"
+              placeholder="?�목 ?�는 ?�성?��? ?�력?�세??
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             />
             <button onClick={handleSearch} className="search-btn">
-              🔍
+              ?��
             </button>
           </div>
         </div>
 
-        {/* Q&A 목록 테이블 */}
+        {/* Q&A 목록 ?�이�?*/}
         <div className="table-container">
           <table className="admin-table">
             <thead>
               <tr>
                 <th style={{ width: "80px" }}>번호</th>
-                <th style={{ width: "200px" }}>상품명</th>
-                <th>제목</th>
-                <th style={{ width: "120px" }}>작성자</th>
-                <th style={{ width: "150px" }}>작성일자</th>
-                <th style={{ width: "100px" }}>답변상태</th>
+                <th style={{ width: "200px" }}>?�품�?/th>
+                <th>?�목</th>
+                <th style={{ width: "120px" }}>?�성??/th>
+                <th style={{ width: "150px" }}>?�성?�자</th>
+                <th style={{ width: "100px" }}>?��??�태</th>
               </tr>
             </thead>
             <tbody>
               {currentItems.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="no-data">
-                    Q&A가 없습니다.
+                    Q&A가 ?�습?�다.
                   </td>
                 </tr>
               ) : (
@@ -156,8 +156,8 @@ const QnaList = () => {
                     <td className="text-left">{qna.productName || "-"}</td>
                     <td className="text-left">
                       {qna.isPrivate && (
-                        <span className="private-icon" title="비밀글">
-                          🔒
+                        <span className="private-icon" title="비�?글">
+                          ?��
                         </span>
                       )}
                       {qna.title || qna.question}
@@ -173,7 +173,7 @@ const QnaList = () => {
                         }`}
                       >
                         {qna.replies && qna.replies.length > 0
-                          ? "답변완료"
+                          ? "?��??�료"
                           : "미답변"}
                       </span>
                     </td>
@@ -184,7 +184,7 @@ const QnaList = () => {
           </table>
         </div>
 
-        {/* 페이지네이션 */}
+        {/* ?�이지?�이??*/}
         {totalPages > 1 && (
           <div className="pagination">
             <button
@@ -192,7 +192,7 @@ const QnaList = () => {
               disabled={currentPage === 1}
               className="page-button"
             >
-              이전
+              ?�전
             </button>
 
             {[...Array(totalPages)].map((_, index) => (
@@ -212,14 +212,14 @@ const QnaList = () => {
               disabled={currentPage === totalPages}
               className="page-button"
             >
-              다음
+              ?�음
             </button>
           </div>
         )}
 
-        {/* 통계 정보 */}
+        {/* ?�계 ?�보 */}
         <div className="qna-stats">
-          <p>전체 Q&A: {filteredQnaList.length}개</p>
+          <p>?�체 Q&A: {filteredQnaList.length}�?/p>
           <p>
             미답변:{" "}
             {
@@ -227,12 +227,12 @@ const QnaList = () => {
                 (q) => !q.replies || q.replies.length === 0
               ).length
             }
-            개 / 답변완료:{" "}
+            �?/ ?��??�료:{" "}
             {
               filteredQnaList.filter((q) => q.replies && q.replies.length > 0)
                 .length
             }
-            개
+            �?
           </p>
         </div>
       </div>
@@ -241,3 +241,4 @@ const QnaList = () => {
 };
 
 export default QnaList;
+

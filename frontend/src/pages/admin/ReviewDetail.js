@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminSidebar from "../../components/layout/AdminSidebar";
 import "./ReviewDetail.css";
 
 const ReviewDetail = () => {
@@ -13,11 +13,11 @@ const ReviewDetail = () => {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 수정 상태
+  // ?�정 ?�태
   const [editingReplyId, setEditingReplyId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
 
-  // 등록 상태
+  // ?�록 ?�태
   const [replyContent, setReplyContent] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -43,21 +43,21 @@ const ReviewDetail = () => {
         setReplies(response.data.replies || []);
       }
     } catch (error) {
-      alert("리뷰 정보를 불러오는데 실패했습니다.");
+      alert("리뷰 ?�보�?불러?�는???�패?�습?�다.");
       navigate("/admin/reviews");
     } finally {
       setLoading(false);
     }
   };
 
-  // 답변 등록
+  // ?��? ?�록
   const handleSubmitReply = async () => {
     if (!replyContent.trim()) {
-      alert("답변 내용을 입력해주세요.");
+      alert("?��? ?�용???�력?�주?�요.");
       return;
     }
 
-    if (!window.confirm("답변을 등록하시겠습니까?")) return;
+    if (!window.confirm("?��????�록?�시겠습?�까?")) return;
 
     setSubmitting(true);
 
@@ -74,20 +74,20 @@ const ReviewDetail = () => {
       );
 
       if (response.data && response.data.success) {
-        alert("답변이 등록되었습니다.");
+        alert("?��????�록?�었?�니??");
         setReplyContent("");
         fetchReviewDetail();
       }
     } catch (error) {
-      alert("답변 등록 중 오류가 발생했습니다.");
+      alert("?��? ?�록 �??�류가 발생?�습?�다.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  // 답변 삭제
+  // ?��? ??��
   const handleDeleteReply = async (replyId) => {
-    if (!window.confirm("답변을 삭제하시겠습니까?")) return;
+    if (!window.confirm("?��?????��?�시겠습?�까?")) return;
 
     try {
       const response = await axios.delete(
@@ -101,34 +101,34 @@ const ReviewDetail = () => {
       );
 
       if (response.data && response.data.success) {
-        alert("답변이 삭제되었습니다.");
+        alert("?��?????��?�었?�니??");
         fetchReviewDetail();
       }
     } catch (error) {
-      alert("답변 삭제 중 오류가 발생했습니다.");
+      alert("?��? ??�� �??�류가 발생?�습?�다.");
     }
   };
 
-  // ⭐ 답변 수정 시작
+  // �??��? ?�정 ?�작
   const startEditReply = (reply) => {
     setEditingReplyId(reply.id);
     setEditedContent(reply.content);
   };
 
-  // ⭐ 수정 취소
+  // �??�정 취소
   const cancelEdit = () => {
     setEditingReplyId(null);
     setEditedContent("");
   };
 
-  // ⭐ 수정 저장
+  // �??�정 ?�??
   const saveEditedReply = async (replyId) => {
     if (!editedContent.trim()) {
-      alert("내용을 입력해주세요.");
+      alert("?�용???�력?�주?�요.");
       return;
     }
 
-    if (!window.confirm("답변을 수정하시겠습니까?")) return;
+    if (!window.confirm("?��????�정?�시겠습?�까?")) return;
 
     try {
       const response = await axios.put(
@@ -143,17 +143,17 @@ const ReviewDetail = () => {
       );
 
       if (response.data && response.data.success) {
-        alert("답변이 수정되었습니다.");
+        alert("?��????�정?�었?�니??");
         setEditingReplyId(null);
         setEditedContent("");
         fetchReviewDetail();
       }
     } catch {
-      alert("답변 수정 중 오류 발생");
+      alert("?��? ?�정 �??�류 발생");
     }
   };
 
-  // ⭐ 상품 상세 페이지 이동 함수 추가
+  // �??�품 ?�세 ?�이지 ?�동 ?�수 추�?
   const handleGoToProduct = () => {
     if (review?.productId) {
       window.location.href = `/products/${review.productId}`;
@@ -176,7 +176,7 @@ const ReviewDetail = () => {
   };
 
   const renderStars = (rating) => {
-    return "★".repeat(rating) + "☆".repeat(5 - rating);
+    return "??.repeat(rating) + "??.repeat(5 - rating);
   };
 
   if (loading) {
@@ -184,7 +184,7 @@ const ReviewDetail = () => {
       <div className="admin-review-detail">
         <AdminSidebar />
         <div className="review-detail-main">
-          <div className="loading">로딩 중...</div>
+          <div className="loading">로딩 �?..</div>
         </div>
       </div>
     );
@@ -195,7 +195,7 @@ const ReviewDetail = () => {
       <div className="admin-review-detail">
         <AdminSidebar />
         <div className="review-detail-main">
-          <div className="error">리뷰를 찾을 수 없습니다.</div>
+          <div className="error">리뷰�?찾을 ???�습?�다.</div>
         </div>
       </div>
     );
@@ -207,16 +207,16 @@ const ReviewDetail = () => {
 
       <div className="review-detail-main">
         <div className="page-header">
-          <h1>리뷰 상세</h1>
+          <h1>리뷰 ?�세</h1>
           <button
             className="btn-back"
             onClick={() => navigate("/admin/reviews")}
           >
-            목록으로
+            목록?�로
           </button>
         </div>
 
-        {/* 리뷰 정보 카드 */}
+        {/* 리뷰 ?�보 카드 */}
         <div className="review-info-card">
           <table className="detail-table">
             <tbody>
@@ -226,21 +226,21 @@ const ReviewDetail = () => {
               </tr>
 
               <tr>
-                <th>작성자</th>
+                <th>?�성??/th>
                 <td>{review.author || review.username}</td>
               </tr>
 
               <tr>
-                <th>작성일자</th>
+                <th>?�성?�자</th>
                 <td>{formatDate(review.createdAt)}</td>
               </tr>
 
               <tr>
-                <th>상품명</th>
+                <th>?�품�?/th>
                 <td>
                   {review.productName ? (
                     <span className="product-link" onClick={handleGoToProduct}>
-                      {review.productName} 🔗
+                      {review.productName} ?��
                     </span>
                   ) : (
                     "-"
@@ -249,7 +249,7 @@ const ReviewDetail = () => {
               </tr>
 
               <tr>
-                <th>평점</th>
+                <th>?�점</th>
                 <td>
                   <span className="stars">{renderStars(review.rating)}</span>
                   <span className="rating-number">{review.rating}/5</span>
@@ -257,7 +257,7 @@ const ReviewDetail = () => {
               </tr>
 
               <tr>
-                <th>리뷰 내용</th>
+                <th>리뷰 ?�용</th>
                 <td className="content-cell">
                   <div className="content-box">{review.content}</div>
                 </td>
@@ -266,9 +266,9 @@ const ReviewDetail = () => {
           </table>
         </div>
 
-        {/* 답변 목록 */}
+        {/* ?��? 목록 */}
         <div className="replies-section">
-          <h2>답변 목록 ({replies.length})</h2>
+          <h2>?��? 목록 ({replies.length})</h2>
 
           {replies.length > 0 ? (
             <div className="replies-list">
@@ -290,13 +290,13 @@ const ReviewDetail = () => {
                           className="btn-edit"
                           onClick={() => startEditReply(reply)}
                         >
-                          수정
+                          ?�정
                         </button>
                         <button
                           className="btn-delete-reply"
                           onClick={() => handleDeleteReply(reply.id)}
                         >
-                          삭제
+                          ??��
                         </button>
                       </div>
                     )}
@@ -318,7 +318,7 @@ const ReviewDetail = () => {
                             className="btn-save"
                             onClick={() => saveEditedReply(reply.id)}
                           >
-                            저장
+                            ?�??
                           </button>
                         </div>
                       </>
@@ -330,18 +330,18 @@ const ReviewDetail = () => {
               ))}
             </div>
           ) : (
-            <div className="no-replies">등록된 답변이 없습니다.</div>
+            <div className="no-replies">?�록???��????�습?�다.</div>
           )}
         </div>
 
-        {/* 답변 작성 */}
+        {/* ?��? ?�성 */}
         <div className="reply-form">
-          <h2>답변 작성</h2>
+          <h2>?��? ?�성</h2>
           <textarea
             className="reply-textarea"
             value={replyContent}
             onChange={(e) => setReplyContent(e.target.value)}
-            placeholder="답변 내용을 입력하세요"
+            placeholder="?��? ?�용???�력?�세??
             rows="5"
             disabled={submitting}
           />
@@ -351,7 +351,7 @@ const ReviewDetail = () => {
               onClick={handleSubmitReply}
               disabled={submitting || !replyContent.trim()}
             >
-              {submitting ? "등록 중..." : "답변 등록"}
+              {submitting ? "?�록 �?.." : "?��? ?�록"}
             </button>
           </div>
         </div>
@@ -361,3 +361,4 @@ const ReviewDetail = () => {
 };
 
 export default ReviewDetail;
+

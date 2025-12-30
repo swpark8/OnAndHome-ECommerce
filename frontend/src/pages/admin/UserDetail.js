@@ -1,6 +1,6 @@
-ï»¿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminSidebar from "../../components/layout/AdminSidebar";
 import axios from "axios";
 import "./UserDetail.css";
 
@@ -12,7 +12,7 @@ const UserDetail = () => {
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  // ìˆ˜ì • í¼ ìƒíƒœ
+  // ¼öÁ¤ Æû »óÅÂ
   const [editForm, setEditForm] = useState({
     username: "",
     email: "",
@@ -25,7 +25,7 @@ const UserDetail = () => {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
-  // Daum ì£¼ì†Œ API ìŠ¤í¬ë¦½íŠ¸ ë¡œë“œ
+  // Daum ÁÖ¼Ò API ½ºÅ©¸³Æ® ·Îµå
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
@@ -40,7 +40,7 @@ const UserDetail = () => {
     };
   }, []);
 
-  // ì£¼ì†Œ ê²€ìƒ‰ íŒì—…
+  // ÁÖ¼Ò °Ë»ö ÆË¾÷
   const handleAddressSearch = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
@@ -87,7 +87,7 @@ const UserDetail = () => {
       if (response.data) {
         setUserInfo(response.data);
 
-        // ì£¼ì†Œ ë¶„ë¦¬
+        // ÁÖ¼Ò ºÐ¸®
         const fullAddress = response.data.address || "";
         const addressParts = fullAddress.split("|");
 
@@ -102,8 +102,8 @@ const UserDetail = () => {
         });
       }
     } catch (err) {
-      console.error("íšŒì› ìƒì„¸ ì •ë³´ ì¡°íšŒ ì˜¤ë¥˜:", err);
-      setError("íšŒì› ìƒì„¸ ì •ë³´ ì¡°íšŒì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+      console.error("È¸¿ø »ó¼¼ Á¤º¸ Á¶È¸ ¿À·ù:", err);
+      setError("È¸¿ø »ó¼¼ Á¤º¸ Á¶È¸¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
     } finally {
       setLoading(false);
     }
@@ -136,12 +136,12 @@ const UserDetail = () => {
   };
 
   const handleSaveInfo = async () => {
-    if (!window.confirm("íšŒì› ì •ë³´ë¥¼ ìˆ˜ì •í•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
+    if (!window.confirm("È¸¿ø Á¤º¸¸¦ ¼öÁ¤ÇÏ½Ã°Ú½À´Ï±î?")) {
       return;
     }
 
     try {
-      // ì£¼ì†Œì™€ ìƒì„¸ì£¼ì†Œë¥¼ í•©ì¹¨
+      // ÁÖ¼Ò¿Í »ó¼¼ÁÖ¼Ò¸¦ ÇÕÄ§
       const fullAddress = editForm.detailAddress
         ? `${editForm.address}|${editForm.detailAddress}`
         : editForm.address;
@@ -155,7 +155,7 @@ const UserDetail = () => {
         address: fullAddress,
       };
 
-      console.log("ìˆ˜ì • ì •ë³´:", updateData);
+      console.log("¼öÁ¤ Á¤º¸:", updateData);
 
       const response = await axios.post(
         `${API_BASE_URL}/api/admin/users/${userId}/update`,
@@ -168,24 +168,24 @@ const UserDetail = () => {
         }
       );
 
-      console.log("ìˆ˜ì • ì™„ë£Œ:", response.data);
+      console.log("¼öÁ¤ ¿Ï·á:", response.data);
 
       if (response.data.success) {
-        alert("íšŒì› ì •ë³´ê°€ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
+        alert("È¸¿ø Á¤º¸°¡ ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
         setIsEditing(false);
-        fetchUserDetail(); // ìµœì‹  ì •ë³´ ë‹¤ì‹œ ì¡°íšŒ
+        fetchUserDetail(); // ÃÖ½Å Á¤º¸ ´Ù½Ã Á¶È¸
       } else {
-        alert(response.data.message || "íšŒì› ì •ë³´ ìˆ˜ì •ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+        alert(response.data.message || "È¸¿ø Á¤º¸ ¼öÁ¤¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
       }
     } catch (err) {
-      console.error("íšŒì› ì •ë³´ ìˆ˜ì • ì˜¤ë¥˜:", err);
-      console.error("ìˆ˜ì • ì‹¤íŒ¨ ì´ìœ :", err.response);
-      alert(err.response?.data?.message || "íšŒì› ì •ë³´ ìˆ˜ì •ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+      console.error("È¸¿ø Á¤º¸ ¼öÁ¤ ¿À·ù:", err);
+      console.error("¼öÁ¤ ½ÇÆÐ ÀÌÀ¯:", err.response);
+      alert(err.response?.data?.message || "È¸¿ø Á¤º¸ ¼öÁ¤¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("ì •ë§ ì´ íšŒì›ì„ íƒˆí‡´ ì²˜ë¦¬í•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
+    if (!window.confirm("Á¤¸» ÀÌ È¸¿øÀ» Å»Åð Ã³¸®ÇÏ½Ã°Ú½À´Ï±î?")) {
       return;
     }
 
@@ -200,23 +200,23 @@ const UserDetail = () => {
       );
 
       if (response.data && response.data.success) {
-        alert("íšŒì› íƒˆí‡´ ì²˜ë¦¬ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+        alert("È¸¿ø Å»Åð Ã³¸®°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
         navigate("/admin/users");
       } else {
-        alert(response.data.message || "íšŒì› íƒˆí‡´ ì²˜ë¦¬ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+        alert(response.data.message || "È¸¿ø Å»Åð Ã³¸®¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
       }
     } catch (error) {
-      console.error("íšŒì› íƒˆí‡´ ì²˜ë¦¬ ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.", error);
-      alert("íšŒì› íƒˆí‡´ ì²˜ë¦¬ ì¤‘ ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
+      console.error("È¸¿ø Å»Åð Ã³¸® Áß ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù.", error);
+      alert("È¸¿ø Å»Åð Ã³¸® Áß ¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù.");
     }
   };
 
   const formatGender = (gender) => {
     if (!gender) return "-";
-    if (gender === "M" || gender === "MALE" || gender === "ë‚¨ìž") return "ë‚¨ì„±";
-    if (gender === "F" || gender === "FEMALE" || gender === "ì—¬ìž")
-      return "ì—¬ì„±";
-    if (gender === "O") return "ê¸°íƒ€";
+    if (gender === "M" || gender === "MALE" || gender === "³²ÀÚ") return "³²¼º";
+    if (gender === "F" || gender === "FEMALE" || gender === "¿©ÀÚ")
+      return "¿©¼º";
+    if (gender === "O") return "±âÅ¸";
     return gender;
   };
 
@@ -234,7 +234,7 @@ const UserDetail = () => {
       <div className="admin-user-detail">
         <AdminSidebar />
         <div className="user-detail-main">
-          <div className="loading">ë¡œë”© ì¤‘ìž…ë‹ˆë‹¤...</div>
+          <div className="loading">·Îµù ÁßÀÔ´Ï´Ù...</div>
         </div>
       </div>
     );
@@ -246,10 +246,10 @@ const UserDetail = () => {
         <AdminSidebar />
         <div className="user-detail-main">
           <div className="error">
-            {error || "íšŒì› ìƒì„¸ ì •ë³´ ì¡°íšŒì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤."}
+            {error || "È¸¿ø »ó¼¼ Á¤º¸ Á¶È¸¿¡ ½ÇÆÐÇß½À´Ï´Ù."}
           </div>
           <button className="btn-back" onClick={() => navigate("/admin/users")}>
-            ëª©ë¡ìœ¼ë¡œ ëŒì•„ê°€ê¸°
+            ¸ñ·ÏÀ¸·Î µ¹¾Æ°¡±â
           </button>
         </div>
       </div>
@@ -262,22 +262,22 @@ const UserDetail = () => {
 
       <div className="user-detail-main">
         <div className="user-detail-header">
-          <h1>íšŒì› ìƒì„¸ ì •ë³´</h1>
+          <h1>È¸¿ø »ó¼¼ Á¤º¸</h1>
           <div className="header-buttons">
             <button
               className={`btn-edit ${isEditing ? "editing" : ""}`}
               onClick={handleEditToggle}
             >
-              {isEditing ? "ì·¨ì†Œ" : "ìˆ˜ì •"}
+              {isEditing ? "Ãë¼Ò" : "¼öÁ¤"}
             </button>
             <button className="btn-delete" onClick={handleDelete}>
-              íƒˆí‡´
+              Å»Åð
             </button>
             <button
               className="btn-back"
               onClick={() => navigate("/admin/users")}
             >
-              ëª©ë¡ìœ¼ë¡œ
+              ¸ñ·ÏÀ¸·Î
             </button>
           </div>
         </div>
@@ -285,15 +285,15 @@ const UserDetail = () => {
         <div className="user-detail-content">
           <div className="user-detail-card">
             <div className="detail-section">
-              <h2>íšŒì› ìƒì„¸ ì •ë³´</h2>
+              <h2>È¸¿ø »ó¼¼ Á¤º¸</h2>
 
               <div className="detail-row">
-                <label>ì•„ì´ë””</label>
+                <label>¾ÆÀÌµð</label>
                 <div className="detail-value">{userInfo.userId || "-"}</div>
               </div>
 
               <div className="detail-row">
-                <label>ì´ë¦„</label>
+                <label>ÀÌ¸§</label>
                 {isEditing ? (
                   <input
                     type="text"
@@ -308,7 +308,7 @@ const UserDetail = () => {
               </div>
 
               <div className="detail-row">
-                <label>ì´ë©”ì¼</label>
+                <label>ÀÌ¸ÞÀÏ</label>
                 {isEditing ? (
                   <input
                     type="email"
@@ -323,7 +323,7 @@ const UserDetail = () => {
               </div>
 
               <div className="detail-row">
-                <label>ì „í™”ë²ˆí˜¸</label>
+                <label>ÀüÈ­¹øÈ£</label>
                 {isEditing ? (
                   <input
                     type="tel"
@@ -339,7 +339,7 @@ const UserDetail = () => {
               </div>
 
               <div className="detail-row">
-                <label>ì„±ë³„</label>
+                <label>¼ºº°</label>
                 {isEditing ? (
                   <select
                     name="gender"
@@ -347,10 +347,10 @@ const UserDetail = () => {
                     onChange={handleInputChange}
                     className="detail-input"
                   >
-                    <option value="">ì„ íƒ</option>
-                    <option value="M">ë‚¨ì„±</option>
-                    <option value="F">ì—¬ì„±</option>
-                    <option value="O">ê¸°íƒ€</option>
+                    <option value="">¼±ÅÃ</option>
+                    <option value="M">³²¼º</option>
+                    <option value="F">¿©¼º</option>
+                    <option value="O">±âÅ¸</option>
                   </select>
                 ) : (
                   <div className="detail-value">
@@ -360,7 +360,7 @@ const UserDetail = () => {
               </div>
 
               <div className="detail-row">
-                <label>ìƒë…„ì›”ì¼</label>
+                <label>»ý³â¿ùÀÏ</label>
                 {isEditing ? (
                   <input
                     type="date"
@@ -377,7 +377,7 @@ const UserDetail = () => {
               </div>
 
               <div className="detail-row">
-                <label>ì£¼ì†Œ</label>
+                <label>ÁÖ¼Ò</label>
                 {isEditing ? (
                   <div className="address-container">
                     <div className="address-input-wrapper">
@@ -386,7 +386,7 @@ const UserDetail = () => {
                         name="address"
                         value={editForm.address}
                         className="detail-input address-input"
-                        placeholder="ì£¼ì†Œë¥¼ ê²€ìƒ‰í•˜ì„¸ìš”"
+                        placeholder="ÁÖ¼Ò¸¦ °Ë»öÇÏ¼¼¿ä"
                         onClick={handleAddressSearch}
                         readOnly
                         style={{ cursor: "pointer" }}
@@ -396,7 +396,7 @@ const UserDetail = () => {
                         className="btn-address-search"
                         onClick={handleAddressSearch}
                       >
-                        ì£¼ì†Œ ê²€ìƒ‰
+                        ÁÖ¼Ò °Ë»ö
                       </button>
                     </div>
                     <input
@@ -405,7 +405,7 @@ const UserDetail = () => {
                       value={editForm.detailAddress}
                       onChange={handleInputChange}
                       className="detail-input detail-address-input"
-                      placeholder="ìƒì„¸ ì£¼ì†Œë¥¼ ìž…ë ¥í•˜ì„¸ìš” (ì˜ˆ: 101ë™ 202í˜¸)"
+                      placeholder="»ó¼¼ ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä (¿¹: 101µ¿ 202È£)"
                     />
                   </div>
                 ) : (
@@ -418,7 +418,7 @@ const UserDetail = () => {
               </div>
 
               <div className="detail-row">
-                <label>ê°€ìž…ì¼</label>
+                <label>°¡ÀÔÀÏ</label>
                 <div className="detail-value">
                   {formatDate(userInfo.createdAt)}
                 </div>
@@ -427,41 +427,41 @@ const UserDetail = () => {
               {isEditing && (
                 <div className="edit-actions">
                   <button className="btn-save" onClick={handleSaveInfo}>
-                    ì •ë³´ ìˆ˜ì •
+                    Á¤º¸ ¼öÁ¤
                   </button>
                 </div>
               )}
             </div>
           </div>
 
-          {/* íšŒì› í†µê³„ ì •ë³´ */}
+          {/* È¸¿ø Åë°è Á¤º¸ */}
           <div className="user-stats-card">
-            <h3>íšŒì› í™œë™ ì •ë³´</h3>
+            <h3>È¸¿ø È°µ¿ Á¤º¸</h3>
             <div className="stats-grid">
               <div className="stat-item">
-                <div className="stat-icon">ðŸ“¦</div>
-                <div className="stat-label">ì´ ì£¼ë¬¸</div>
-                <div className="stat-value">{userInfo.orderCount || 0}ê±´</div>
+                <div className="stat-icon">??</div>
+                <div className="stat-label">ÃÑ ÁÖ¹®</div>
+                <div className="stat-value">{userInfo.orderCount || 0}°Ç</div>
               </div>
 
               <div className="stat-item">
-                <div className="stat-icon">ðŸ’°</div>
-                <div className="stat-label">ì´ êµ¬ë§¤ê¸ˆì•¡</div>
+                <div className="stat-icon">??</div>
+                <div className="stat-label">ÃÑ ±¸¸Å±Ý¾×</div>
                 <div className="stat-value">
-                  {(userInfo.totalPurchase || 0).toLocaleString()}ì›
+                  {(userInfo.totalPurchase || 0).toLocaleString()}¿ø
                 </div>
               </div>
 
               <div className="stat-item">
-                <div className="stat-icon">â­</div>
-                <div className="stat-label">ë¦¬ë·° ìž‘ì„±</div>
-                <div className="stat-value">{userInfo.reviewCount || 0}ê±´</div>
+                <div className="stat-icon">?</div>
+                <div className="stat-label">¸®ºä ÀÛ¼º</div>
+                <div className="stat-value">{userInfo.reviewCount || 0}°Ç</div>
               </div>
 
               <div className="stat-item">
-                <div className="stat-icon">â“</div>
-                <div className="stat-label">ë¬¸ì˜ ìž‘ì„±</div>
-                <div className="stat-value">{userInfo.qnaCount || 0}ê±´</div>
+                <div className="stat-icon">?</div>
+                <div className="stat-label">¹®ÀÇ ÀÛ¼º</div>
+                <div className="stat-value">{userInfo.qnaCount || 0}°Ç</div>
               </div>
             </div>
           </div>
@@ -472,3 +472,4 @@ const UserDetail = () => {
 };
 
 export default UserDetail;
+

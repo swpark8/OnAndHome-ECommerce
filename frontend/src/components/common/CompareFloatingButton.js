@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import CompareModal from "../compare/CompareModal";
+import CompareModal from "../domain/compare/CompareModal";
 import "./CompareFloatingButton.css";
 
 const CompareFloatingButton = () => {

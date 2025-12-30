@@ -1,74 +1,101 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import './AdminSidebar.css';
 
 const AdminSidebar = () => {
   const location = useLocation();
-  
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const menuItems = [
+    {
+      id: 'dashboard',
+      name: '대시보드',
+      icon: '📊',
+      path: '/admin/dashboard'
+    },
+    {
+      id: 'members',
+      name: '회원 관리',
+      icon: '👥',
+      path: '/admin/users'
+    },
+    {
+      id: 'deleted-members',
+      name: '탈퇴 회원',
+      icon: '🚫',
+      path: '/admin/users/deleted'
+    },
+    {
+      id: 'products',
+      name: '상품 관리',
+      icon: '📦',
+      path: '/admin/products'
+    },
+    {
+      id: 'orders',
+      name: '주문 관리',
+      icon: '🛒',
+      path: '/admin/orders'
+    },
+    {
+      id: 'notices',
+      name: '공지사항',
+      icon: '📄',
+      path: '/admin/notices'
+    },
+    {
+      id: 'qna',
+      name: 'Q&A',
+      icon: '📝',
+      path: '/admin/qna'
+    },
+    {
+      id: 'reviews',
+      name: '리뷰',
+      icon: '⭐',
+      path: '/admin/reviews'
+    },
+    {
+      id: 'advertisements',
+      name: '광고',
+      icon: '📢',
+      path: '/admin/advertisements'
+    }
+  ];
+
   const isActive = (path) => {
-    return location.pathname.startsWith(path) ? 'active' : '';
+    return location.pathname === path;
   };
-  
+
   return (
-    <aside className="sidebar">
+    <div className={`admin-sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+      <div className="sidebar-header">
+        <Link to="/admin" className="logo">
+          <img src="/images/logo.png" alt="On&Home" className="sidebar-logo" />
+        </Link>
+      </div>
+
+      <div className="sidebar-user">
+        <span className="user-label">Admin</span>
+      </div>
+
+      <div className="breadcrumb">
+        <Link to="/" className="logout-link">메인으로</Link>
+      </div>
+
       <nav className="sidebar-nav">
-        <ul className="sidebar-menu">
-          <li className={isActive('/admin/dashboard')}>
-            <Link to="/admin">
-              <img src="/images/menu_dash.png" alt="" />
-              <span>대시보드</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/users') && !location.pathname.includes('/deleted')}>
-            <Link to="/admin/users">
-              <img src="/images/member.png" alt="" />
-              <span>회원 관리</span>
-            </Link>
-          </li>
-          <li className={location.pathname.includes('/admin/users/deleted') ? 'active' : ''}>
-            <Link to="/admin/users/deleted">
-              <img src="/images/member.png" alt="" />
-              <span>탈퇴 회원</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/products')}>
-            <Link to="/admin/products">
-              <img src="/images/item.png" alt="" />
-              <span>상품 관리</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/orders')}>
-            <Link to="/admin/orders">
-              <img src="/images/order.png" alt="" />
-              <span>주문 관리</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/notices')}>
-            <Link to="/admin/notices">
-              <img src="/images/board.png" alt="" />
-              <span>공지사항</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/qna')}>
-            <Link to="/admin/qna">
-              <img src="/images/board.png" alt="" />
-              <span>Q&A</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/reviews')}>
-            <Link to="/admin/reviews">
-              <img src="/images/board.png" alt="" />
-              <span>리뷰</span>
-            </Link>
-          </li>
-          <li className={isActive('/admin/advertisements')}>
-            <Link to="/admin/advertisements">
-              <img src="/images/board.png" alt="" />
-              <span>광고</span>
-            </Link>
-          </li>
+        <ul className="menu-list">
+          {menuItems.map(item => (
+            <li key={item.id} className={isActive(item.path) ? 'active' : ''}>
+              <Link to={item.path}>
+                <span className="menu-icon">{item.icon}</span>
+                <span className="menu-text">{item.name}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </nav>
-    </aside>
+    </div>
   );
 };
 

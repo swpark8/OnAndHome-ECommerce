@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../../store/slices/userSlice";
 import { setUnreadCount } from "../../store/slices/notificationSlice";
-import CompareFloatingButton from "../common/CompareFloatingButton";
-import CartFloatingButton from "../cart/CartFloatingButton";
+import CompareFloatingButton from "../domain/compare/CompareFloatingButton";
+import CartFloatingButton from "../domain/cart/CartFloatingButton";
 import notificationApi from "../../api/notificationApi";
 import "./UserLayout.css";
 

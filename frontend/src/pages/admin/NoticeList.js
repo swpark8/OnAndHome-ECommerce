@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminSidebar from '../../components/layout/AdminSidebar';
 import noticeApi from '../../api/noticeApi';
 import './NoticeList.css';
 
@@ -20,14 +20,14 @@ const NoticeList = () => {
     setLoading(true);
     try {
       const data = await noticeApi.getAllNotices();
-      // 날짜 기준 내림차순 정렬
+      // ?�짜 기�? ?�림차순 ?�렬
       const sortedData = data.sort((a, b) => 
         new Date(b.createdAt) - new Date(a.createdAt)
       );
       setNotices(sortedData);
     } catch (error) {
-      console.error('공지사항 로드 실패:', error);
-      alert('공지사항을 불러오는데 실패했습니다.');
+      console.error('공�??�항 로드 ?�패:', error);
+      alert('공�??�항??불러?�는???�패?�습?�다.');
     } finally {
       setLoading(false);
     }
@@ -61,14 +61,14 @@ const NoticeList = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('정말 삭제하시겠습니까?')) {
+    if (window.confirm('?�말 ??��?�시겠습?�까?')) {
       try {
         await noticeApi.deleteNotice(id);
-        alert('삭제되었습니다.');
-        fetchNotices(); // 목록 새로고침
+        alert('??��?�었?�니??');
+        fetchNotices(); // 목록 ?�로고침
       } catch (error) {
-        console.error('삭제 실패:', error);
-        alert('삭제에 실패했습니다.');
+        console.error('??�� ?�패:', error);
+        alert('??��???�패?�습?�다.');
       }
     }
   };
@@ -90,33 +90,33 @@ const NoticeList = () => {
       <div className="notice-list-main">
         <div className="notice-container">
           <div className="notice-header">
-            <h1>공지사항 관리</h1>
-            <p className="notice-description">사용자에게 표시될 공지사항을 관리합니다</p>
+            <h1>공�??�항 관�?/h1>
+            <p className="notice-description">?�용?�에�??�시??공�??�항??관리합?�다</p>
           </div>
 
           <div className="notice-controls">
             <div className="search-box">
               <input
                 type="text"
-                placeholder="제목 또는 작성자로 검색"
+                placeholder="?�목 ?�는 ?�성?�로 검??
                 value={searchTerm}
                 onChange={handleSearch}
                 className="search-input"
               />
-              <span className="search-icon">🔍</span>
+              <span className="search-icon">?��</span>
             </div>
             <button className="btn-write" onClick={handleWriteClick}>
-              <span className="btn-icon">✏️</span>
-              공지사항 작성
+              <span className="btn-icon">?�️</span>
+              공�??�항 ?�성
             </button>
           </div>
 
           <div className="notice-stats">
-            <span className="total-count">전체 {filteredNotices.length}건</span>
+            <span className="total-count">?�체 {filteredNotices.length}�?/span>
           </div>
 
           {loading ? (
-            <div className="loading">로딩 중...</div>
+            <div className="loading">로딩 �?..</div>
           ) : (
             <>
               <div className="notice-table-wrapper">
@@ -124,17 +124,17 @@ const NoticeList = () => {
                   <thead>
                     <tr>
                       <th style={{ width: '80px' }}>번호</th>
-                      <th style={{ width: 'auto' }}>제목</th>
-                      <th style={{ width: '120px' }}>작성자</th>
-                      <th style={{ width: '120px' }}>작성일</th>
-                      <th style={{ width: '150px' }}>관리</th>
+                      <th style={{ width: 'auto' }}>?�목</th>
+                      <th style={{ width: '120px' }}>?�성??/th>
+                      <th style={{ width: '120px' }}>?�성??/th>
+                      <th style={{ width: '150px' }}>관�?/th>
                     </tr>
                   </thead>
                   <tbody>
                     {currentNotices.length === 0 ? (
                       <tr>
                         <td colSpan="5" className="no-data">
-                          등록된 공지사항이 없습니다.
+                          ?�록??공�??�항???�습?�다.
                         </td>
                       </tr>
                     ) : (
@@ -157,13 +157,13 @@ const NoticeList = () => {
                                 className="btn-edit"
                                 onClick={() => navigate(`/admin/notices/edit/${notice.id}`)}
                               >
-                                수정
+                                ?�정
                               </button>
                               <button
                                 className="btn-delete"
                                 onClick={() => handleDelete(notice.id)}
                               >
-                                삭제
+                                ??��
                               </button>
                             </div>
                           </td>
@@ -181,7 +181,7 @@ const NoticeList = () => {
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                   >
-                    이전
+                    ?�전
                   </button>
                   
                   {[...Array(totalPages)].map((_, index) => (
@@ -199,7 +199,7 @@ const NoticeList = () => {
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                   >
-                    다음
+                    ?�음
                   </button>
                 </div>
               )}
@@ -212,3 +212,4 @@ const NoticeList = () => {
 };
 
 export default NoticeList;
+

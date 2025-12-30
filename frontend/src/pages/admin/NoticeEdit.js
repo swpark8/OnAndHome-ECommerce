@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminSidebar from '../../components/layout/AdminSidebar';
 import noticeApi from '../../api/noticeApi';
 import './NoticeWrite.css';
 
@@ -29,8 +29,8 @@ const NoticeEdit = () => {
         writer: data.writer || '관리자'
       });
     } catch (error) {
-      console.error('공지사항 로드 실패:', error);
-      alert('공지사항을 불러오는데 실패했습니다.');
+      console.error('공�??�항 로드 ?�패:', error);
+      alert('공�??�항??불러?�는???�패?�습?�다.');
       navigate('/admin/notices');
     } finally {
       setLoading(false);
@@ -49,30 +49,30 @@ const NoticeEdit = () => {
     e.preventDefault();
     
     if (!formData.title.trim()) {
-      alert('제목을 입력해주세요.');
+      alert('?�목???�력?�주?�요.');
       return;
     }
     
     if (!formData.content.trim()) {
-      alert('내용을 입력해주세요.');
+      alert('?�용???�력?�주?�요.');
       return;
     }
 
     setSubmitting(true);
     try {
       await noticeApi.updateNotice(id, formData);
-      alert('공지사항이 수정되었습니다.');
+      alert('공�??�항???�정?�었?�니??');
       navigate(`/admin/notices/${id}`);
     } catch (error) {
-      console.error('공지사항 수정 실패:', error);
-      alert('공지사항 수정에 실패했습니다.');
+      console.error('공�??�항 ?�정 ?�패:', error);
+      alert('공�??�항 ?�정???�패?�습?�다.');
     } finally {
       setSubmitting(false);
     }
   };
 
   const handleCancel = () => {
-    if (window.confirm('수정을 취소하시겠습니까? 변경사항은 저장되지 않습니다.')) {
+    if (window.confirm('?�정??취소?�시겠습?�까? 변경사??? ?�?�되지 ?�습?�다.')) {
       navigate(`/admin/notices/${id}`);
     }
   };
@@ -82,7 +82,7 @@ const NoticeEdit = () => {
       <div className="admin-dashboard">
         <AdminSidebar />
         <div className="dashboard-main">
-          <div className="loading">로딩 중...</div>
+          <div className="loading">로딩 �?..</div>
         </div>
       </div>
     );
@@ -95,22 +95,22 @@ const NoticeEdit = () => {
       <div className="dashboard-main">
         <div className="notice-write-container">
           <div className="notice-write-header">
-            <h1>공지사항 수정</h1>
-            <p className="notice-description">공지사항을 수정합니다</p>
+            <h1>공�??�항 ?�정</h1>
+            <p className="notice-description">공�??�항???�정?�니??/p>
           </div>
 
           <form onSubmit={handleSubmit} className="notice-write-form">
             <div className="form-card">
               <div className="form-section">
                 <label className="form-label required">
-                  제목
+                  ?�목
                 </label>
                 <input
                   type="text"
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  placeholder="공지사항 제목을 입력하세요"
+                  placeholder="공�??�항 ?�목???�력?�세??
                   className="form-input"
                   maxLength={100}
                 />
@@ -121,14 +121,14 @@ const NoticeEdit = () => {
 
               <div className="form-section">
                 <label className="form-label required">
-                  작성자
+                  ?�성??
                 </label>
                 <input
                   type="text"
                   name="writer"
                   value={formData.writer}
                   onChange={handleInputChange}
-                  placeholder="작성자명을 입력하세요"
+                  placeholder="?�성?�명???�력?�세??
                   className="form-input"
                   maxLength={50}
                 />
@@ -136,18 +136,18 @@ const NoticeEdit = () => {
 
               <div className="form-section">
                 <label className="form-label required">
-                  내용
+                  ?�용
                 </label>
                 <textarea
                   name="content"
                   value={formData.content}
                   onChange={handleInputChange}
-                  placeholder="공지사항 내용을 입력하세요"
+                  placeholder="공�??�항 ?�용???�력?�세??
                   className="form-textarea"
                   rows={15}
                 />
                 <div className="char-count">
-                  {formData.content.length}자
+                  {formData.content.length}??
                 </div>
               </div>
             </div>
@@ -165,7 +165,7 @@ const NoticeEdit = () => {
                 className="btn-submit"
                 disabled={submitting}
               >
-                {submitting ? '수정 중...' : '수정하기'}
+                {submitting ? '?�정 �?..' : '?�정?�기'}
               </button>
             </div>
           </form>
@@ -176,3 +176,4 @@ const NoticeEdit = () => {
 };
 
 export default NoticeEdit;
+

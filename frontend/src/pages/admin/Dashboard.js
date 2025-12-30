@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminSidebar from "../../components/admin/AdminSidebar";
-import DashboardCard from "../../components/admin/DashboardCard";
+import { AdminSidebar } from "../../components/layout";
+import { DashboardCard } from "../../components/domain";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -158,37 +158,37 @@ const Dashboard = () => {
         </div>
 
         <div className="dashboard-grid">
-          {/* 매출현황 카드 */}
+          {/* 매출?�황 카드 */}
           <DashboardCard title="매출현황" type="sales">
             <div className="card-content">
               <div className="data-row">
                 <span className="label">오늘의 주문</span>
                 <span className="value">
-                  {dashboardData.sales.todayOrders} 건
+                  {dashboardData.sales.todayOrders} �?
                 </span>
               </div>
               <div className="data-row">
                 <span className="label">오늘의 매출</span>
                 <span className="value">
-                  {formatCurrency(dashboardData.sales.todayRevenue)} 원
+                  {formatCurrency(dashboardData.sales.todayRevenue)} ??
                 </span>
               </div>
               <div className="data-row">
                 <span className="label">이달의 매출</span>
                 <span className="value highlight">
-                  {formatCurrency(dashboardData.sales.monthRevenue)} 원
+                  {formatCurrency(dashboardData.sales.monthRevenue)} ??
                 </span>
               </div>
             </div>
           </DashboardCard>
 
-          {/* 상품 현황 카드 - 여기 클릭 기능 추가됨 */}
+          {/* 상품 현황 카드 - 기능 추가 */}
           <DashboardCard title="상품 현황" type="products">
             <div className="card-content">
               <div className="data-row clickable" onClick={goToProductList}>
-                <span className="label">전체상품</span>
+                <span className="label">?�체?�품</span>
                 <span className="value">
-                  {dashboardData.products.totalProducts} 건
+                  {dashboardData.products.totalProducts} �?
                 </span>
               </div>
               <div className="data-row clickable" onClick={goToProductList}>
@@ -204,21 +204,21 @@ const Dashboard = () => {
           <DashboardCard title="회원 현황" type="members">
             <div className="card-content">
               <div className="data-row clickable" onClick={goToUserList}>
-                <span className="label">신규가입 회원</span>
+                <span className="label">신규 회원</span>
                 <span className="value">
-                  {dashboardData.members.newMembers} 명
+                  {dashboardData.members.newMembers} 건
                 </span>
               </div>
               <div className="data-row clickable" onClick={goToUserList}>
-                <span className="label">전체회원</span>
+                <span className="label">전체 회원</span>
                 <span className="value">
-                  {dashboardData.members.totalMembers} 명
+                  {dashboardData.members.totalMembers} 건
                 </span>
               </div>
               <div className="data-row clickable" onClick={goToDeletedUserList}>
                 <span className="label">탈퇴 회원</span>
                 <span className="value">
-                  {dashboardData.members.inactiveMembers} 명
+                  {dashboardData.members.inactiveMembers} 건
                 </span>
               </div>
             </div>
@@ -243,15 +243,15 @@ const Dashboard = () => {
           </DashboardCard>
         </div>
 
-        {/* 관리자 정보 플로팅 박스 */}
+        {/* 관리자 정보 로그아웃 박스 */}
         <div className="admin-info-box">
           <div className="admin-info">
-            <div className="admin-name">{adminInfo.name} 님</div>
+            <div className="admin-name">{adminInfo.name} </div>
             <div className="admin-greeting">{adminInfo.username}</div>
           </div>
           <button className="logout-btn" onClick={handleLogout}>
             logout
-            <span className="logout-icon">➡</span>
+            <span className="logout-icon"></span>
           </button>
         </div>
       </div>
@@ -260,3 +260,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
