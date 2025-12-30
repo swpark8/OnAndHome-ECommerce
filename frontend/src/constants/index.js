@@ -93,3 +93,4 @@ export const SUCCESS_MESSAGES = {
   ADD_TO_CART_SUCCESS: "장바구니에 추가되었습니다.",
   ORDER_SUCCESS: "주문이 완료되었습니다.",
 };
+

@@ -1,14 +1,6 @@
 // Axios 라이브러리 import - HTTP 요청을 쉽게 보낼 수 있게 해주는 라이브러리
 import axios from 'axios';
-
-/**
- * API 기본 URL 설정
- *
- * 환경별 URL:
- * - 개발 환경: process.env.REACT_APP_API_URL (.env 파일에서 설정)
- * - 기본값: http://localhost:8080 (백엔드 Spring Boot 서버)
- */
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+import { API_BASE_URL } from '../constants';
 
 /**
  * Axios 인스턴스 생성

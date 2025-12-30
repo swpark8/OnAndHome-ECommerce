@@ -37,8 +37,10 @@
  * | getCount()| 찜 개수 조회      | GET /api/favorites/count     |
  */
 
+import { API_BASE_URL } from '../constants';
+
 /** 백엔드 Favorite API Base URL */
-const BASE_URL = 'http://localhost:8080/api/favorites';
+const BASE_URL = `${API_BASE_URL}/api/favorites`;
 
 /**
  * 인증 헤더 생성 함수
