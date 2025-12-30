@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminSidebar from "../../components/layout/AdminSidebar";
 import "./QnaDetail.css";
 
 const QnaDetail = () => {
@@ -12,11 +12,11 @@ const QnaDetail = () => {
   const [qna, setQna] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 답변 등록용
+  // ?��? ?�록??
   const [replyContent, setReplyContent] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // 답변 수정용
+  // ?��? ?�정??
   const [editingReplyId, setEditingReplyId] = useState(null);
   const [editReplyContent, setEditReplyContent] = useState("");
 
@@ -31,7 +31,7 @@ const QnaDetail = () => {
       const data = response.data.data || response.data;
       setQna(data);
     } catch {
-      alert("Q&A 정보 조회 실패");
+      alert("Q&A ?�보 조회 ?�패");
       navigate("/admin/qna");
     } finally {
       setLoading(false);
@@ -39,12 +39,12 @@ const QnaDetail = () => {
   };
 
   // -------------------------
-  // 답변 등록
+  // ?��? ?�록
   // -------------------------
   const handleSubmitReply = async () => {
-    if (!replyContent.trim()) return alert("답변을 입력하세요.");
+    if (!replyContent.trim()) return alert("?��????�력?�세??");
 
-    if (!window.confirm("답변을 등록하시겠습니까?")) return;
+    if (!window.confirm("?��????�록?�시겠습?�까?")) return;
 
     setSubmitting(true);
     try {
@@ -62,19 +62,19 @@ const QnaDetail = () => {
       );
 
       if (res.data.success) {
-        alert("답변 등록 완료");
+        alert("?��? ?�록 ?�료");
         setReplyContent("");
         fetchQnaDetail();
       }
     } catch {
-      alert("답변 등록 중 오류 발생");
+      alert("?��? ?�록 �??�류 발생");
     } finally {
       setSubmitting(false);
     }
   };
 
   // -------------------------
-  // 답변 수정 시작
+  // ?��? ?�정 ?�작
   // -------------------------
   const handleEditReply = (reply) => {
     setEditingReplyId(reply.id);
@@ -82,11 +82,11 @@ const QnaDetail = () => {
   };
 
   // -------------------------
-  // 답변 수정 저장
+  // ?��? ?�정 ?�??
   // -------------------------
   const handleSaveReply = async (replyId) => {
     if (!editReplyContent.trim()) {
-      alert("답변 내용을 입력하세요.");
+      alert("?��? ?�용???�력?�세??");
       return;
     }
 
@@ -102,17 +102,17 @@ const QnaDetail = () => {
       );
 
       if (res.data.success) {
-        alert("답변 수정 완료");
+        alert("?��? ?�정 ?�료");
         setEditingReplyId(null);
         fetchQnaDetail();
       }
     } catch (e) {
-      alert("답변 수정 실패");
+      alert("?��? ?�정 ?�패");
     }
   };
 
   // -------------------------
-  // 답변 수정 취소
+  // ?��? ?�정 취소
   // -------------------------
   const handleCancelReply = () => {
     setEditingReplyId(null);
@@ -120,10 +120,10 @@ const QnaDetail = () => {
   };
 
   // -------------------------
-  // 답변 삭제
+  // ?��? ??��
   // -------------------------
   const handleDeleteReply = async (replyId) => {
-    if (!window.confirm("답변을 삭제하시겠습니까?")) return;
+    if (!window.confirm("?��?????��?�시겠습?�까?")) return;
 
     try {
       const res = await axios.delete(
@@ -136,11 +136,11 @@ const QnaDetail = () => {
       );
 
       if (res.data.success) {
-        alert("삭제 성공");
+        alert("??�� ?�공");
         fetchQnaDetail();
       }
     } catch {
-      alert("삭제 실패");
+      alert("??�� ?�패");
     }
   };
 
@@ -171,7 +171,7 @@ const QnaDetail = () => {
       <div className="admin-qna-detail">
         <AdminSidebar />
         <div className="qna-detail-main">
-          <div className="loading">로딩 중...</div>
+          <div className="loading">로딩 �?..</div>
         </div>
       </div>
     );
@@ -181,14 +181,14 @@ const QnaDetail = () => {
     <div className="admin-qna-detail">
       <AdminSidebar />
       <div className="qna-detail-main">
-        {/* 헤더 */}
+        {/* ?�더 */}
         <div className="page-header">
-          <h1>Q&A 상세</h1>
+          <h1>Q&A ?�세</h1>
           <button
             className="back-button"
             onClick={() => navigate("/admin/qna")}
           >
-            목록으로
+            목록?�로
           </button>
         </div>
 
@@ -201,11 +201,11 @@ const QnaDetail = () => {
                 <td>{qna.id}</td>
               </tr>
               <tr>
-                <th>상품명</th>
+                <th>?�품�?/th>
                 <td>
                   {qna.productName ? (
                     <span className="product-link" onClick={handleGoToProduct}>
-                      {qna.productName} <span className="link-icon">🔗</span>
+                      {qna.productName} <span className="link-icon">?��</span>
                     </span>
                   ) : (
                     "-"
@@ -213,26 +213,26 @@ const QnaDetail = () => {
                 </td>
               </tr>
               <tr>
-                <th>작성일자</th>
+                <th>?�성?�자</th>
                 <td>{formatDate(qna.createdAt)}</td>
               </tr>
               <tr>
-                <th>작성자</th>
+                <th>?�성??/th>
                 <td>{qna.writer}</td>
               </tr>
               <tr>
-                <th>제목</th>
+                <th>?�목</th>
                 <td>
                   {qna.isPrivate && (
-                    <span className="private-icon" title="비밀글">
-                      🔒{" "}
+                    <span className="private-icon" title="비�?글">
+                      ?��{" "}
                     </span>
                   )}
                   {qna.title}
                 </td>
               </tr>
               <tr>
-                <th>질문 내용</th>
+                <th>질문 ?�용</th>
                 <td className="content-cell">
                   <div className="content-box">{qna.question}</div>
                 </td>
@@ -241,10 +241,10 @@ const QnaDetail = () => {
           </table>
         </div>
 
-        {/* 답변 목록 */}
+        {/* ?��? 목록 */}
         {qna.replies?.length > 0 && (
           <div className="replies-section">
-            <h3>답변 목록</h3>
+            <h3>?��? 목록</h3>
 
             {qna.replies.map((reply) => (
               <div className="reply-card" key={reply.id}>
@@ -257,7 +257,7 @@ const QnaDetail = () => {
                   </span>
                 </div>
 
-                {/* 수정 모드 */}
+                {/* ?�정 모드 */}
                 {editingReplyId === reply.id ? (
                   <>
                     <textarea
@@ -278,7 +278,7 @@ const QnaDetail = () => {
                         className="save-button"
                         onClick={() => handleSaveReply(reply.id)}
                       >
-                        저장
+                        ?�??
                       </button>
                     </div>
                   </>
@@ -291,13 +291,13 @@ const QnaDetail = () => {
                         className="edit-button"
                         onClick={() => handleEditReply(reply)}
                       >
-                        수정
+                        ?�정
                       </button>
                       <button
                         className="delete-button"
                         onClick={() => handleDeleteReply(reply.id)}
                       >
-                        삭제
+                        ??��
                       </button>
                     </div>
                   </>
@@ -307,12 +307,12 @@ const QnaDetail = () => {
           </div>
         )}
 
-        {/* 답변 등록 */}
+        {/* ?��? ?�록 */}
         <div className="reply-form-section">
-          <h3>답변 등록</h3>
+          <h3>?��? ?�록</h3>
           <div className="reply-form">
             <textarea
-              placeholder="답변을 입력하세요"
+              placeholder="?��????�력?�세??
               value={replyContent}
               onChange={(e) => setReplyContent(e.target.value)}
               rows="6"
@@ -330,7 +330,7 @@ const QnaDetail = () => {
                 disabled={submitting}
                 onClick={handleSubmitReply}
               >
-                {submitting ? "등록 중..." : "답변등록"}
+                {submitting ? "?�록 �?.." : "?��??�록"}
               </button>
             </div>
           </div>
@@ -341,3 +341,4 @@ const QnaDetail = () => {
 };
 
 export default QnaDetail;
+

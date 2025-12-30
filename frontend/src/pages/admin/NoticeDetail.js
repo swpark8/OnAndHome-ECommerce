@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminSidebar from '../../components/layout/AdminSidebar';
 import noticeApi from '../../api/noticeApi';
 import './NoticeDetail.css';
 
@@ -20,8 +20,8 @@ const NoticeDetail = () => {
       const data = await noticeApi.getNoticeDetail(id);
       setNotice(data);
     } catch (error) {
-      console.error('공지사항 로드 실패:', error);
-      alert('공지사항을 불러오는데 실패했습니다.');
+      console.error('공�??�항 로드 ?�패:', error);
+      alert('공�??�항??불러?�는???�패?�습?�다.');
       navigate('/admin/notices');
     } finally {
       setLoading(false);
@@ -33,17 +33,17 @@ const NoticeDetail = () => {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('정말 삭제하시겠습니까?')) {
+    if (!window.confirm('?�말 ??��?�시겠습?�까?')) {
       return;
     }
 
     try {
       await noticeApi.deleteNotice(id);
-      alert('삭제되었습니다.');
+      alert('??��?�었?�니??');
       navigate('/admin/notices');
     } catch (error) {
-      console.error('삭제 실패:', error);
-      alert('삭제에 실패했습니다.');
+      console.error('??�� ?�패:', error);
+      alert('??��???�패?�습?�다.');
     }
   };
 
@@ -69,7 +69,7 @@ const NoticeDetail = () => {
       <div className="admin-dashboard">
         <AdminSidebar />
         <div className="dashboard-main">
-          <div className="loading">로딩 중...</div>
+          <div className="loading">로딩 �?..</div>
         </div>
       </div>
     );
@@ -80,7 +80,7 @@ const NoticeDetail = () => {
       <div className="admin-dashboard">
         <AdminSidebar />
         <div className="dashboard-main">
-          <div className="error-message">공지사항을 찾을 수 없습니다.</div>
+          <div className="error-message">공�??�항??찾을 ???�습?�다.</div>
         </div>
       </div>
     );
@@ -93,11 +93,11 @@ const NoticeDetail = () => {
       <div className="dashboard-main">
         <div className="notice-detail-container">
           <div className="notice-detail-header">
-            <h1>공지사항 상세</h1>
+            <h1>공�??�항 ?�세</h1>
           </div>
 
           <div className="notice-detail-card">
-            {/* 헤더 */}
+            {/* ?�더 */}
             <div className="detail-header">
               <div className="title-section">
                 <h2 className="detail-title">{notice.title}</h2>
@@ -105,23 +105,23 @@ const NoticeDetail = () => {
               
               <div className="meta-info">
                 <div className="meta-item">
-                  <span className="meta-label">작성자</span>
+                  <span className="meta-label">?�성??/span>
                   <span className="meta-value">{notice.writer || '관리자'}</span>
                 </div>
                 <div className="meta-item">
-                  <span className="meta-label">작성일</span>
+                  <span className="meta-label">?�성??/span>
                   <span className="meta-value">{formatDate(notice.createdAt)}</span>
                 </div>
                 {notice.updatedAt && (
                   <div className="meta-item">
-                    <span className="meta-label">수정일</span>
+                    <span className="meta-label">?�정??/span>
                     <span className="meta-value">{formatDate(notice.updatedAt)}</span>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* 내용 */}
+            {/* ?�용 */}
             <div className="detail-content">
               <div className="content-body">
                 {notice.content.split('\n').map((line, index) => (
@@ -130,17 +130,17 @@ const NoticeDetail = () => {
               </div>
             </div>
 
-            {/* 액션 버튼 */}
+            {/* ?�션 버튼 */}
             <div className="detail-actions">
               <button className="btn-list" onClick={handleList}>
                 목록
               </button>
               <div className="action-group">
                 <button className="btn-edit" onClick={handleEdit}>
-                  수정
+                  ?�정
                 </button>
                 <button className="btn-delete" onClick={handleDelete}>
-                  삭제
+                  ??��
                 </button>
               </div>
             </div>
@@ -152,3 +152,4 @@ const NoticeDetail = () => {
 };
 
 export default NoticeDetail;
+

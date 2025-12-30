@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminSidebar from '../../components/layout/AdminSidebar';
 import advertisementApi from '../../api/advertisementApi';
 import toast from 'react-hot-toast';
 import './AdvertisementForm.css';
@@ -33,8 +33,8 @@ const AdvertisementForm = () => {
         setFormData(response.advertisement);
       }
     } catch (error) {
-      console.error('광고 조회 실패:', error);
-      toast.error('광고 정보를 불러오는데 실패했습니다.');
+      console.error('광고 조회 ?�패:', error);
+      toast.error('광고 ?�보�?불러?�는???�패?�습?�다.');
     }
   };
 
@@ -48,11 +48,11 @@ const AdvertisementForm = () => {
 
   const validateForm = () => {
     if (!formData.title.trim()) {
-      toast.error('제목을 입력해주세요.');
+      toast.error('?�목???�력?�주?�요.');
       return false;
     }
     if (!formData.content.trim()) {
-      toast.error('내용을 입력해주세요.');
+      toast.error('?�용???�력?�주?�요.');
       return false;
     }
     return true;
@@ -80,15 +80,15 @@ const AdvertisementForm = () => {
         navigate('/admin/advertisements');
       }
     } catch (error) {
-      console.error('광고 저장 실패:', error);
-      toast.error(error.response?.data?.message || '광고 저장에 실패했습니다.');
+      console.error('광고 ?�???�패:', error);
+      toast.error(error.response?.data?.message || '광고 ?�?�에 ?�패?�습?�다.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleCancel = () => {
-    if (window.confirm('작성을 취소하시겠습니까? 작성 중인 내용은 저장되지 않습니다.')) {
+    if (window.confirm('?�성??취소?�시겠습?�까? ?�성 중인 ?�용?� ?�?�되지 ?�습?�다.')) {
       navigate('/admin/advertisements');
     }
   };
@@ -100,9 +100,9 @@ const AdvertisementForm = () => {
       <div className="dashboard-main">
         <div className="notice-write-container">
           <div className="notice-write-header">
-            <h1>{isEditMode ? '광고 수정' : '광고 작성'}</h1>
+            <h1>{isEditMode ? '광고 ?�정' : '광고 ?�성'}</h1>
             <p className="notice-description">
-              {isEditMode ? '광고 정보를 수정합니다' : '새로운 광고를 작성합니다'}
+              {isEditMode ? '광고 ?�보�??�정?�니?? : '?�로??광고�??�성?�니??}
             </p>
           </div>
 
@@ -110,14 +110,14 @@ const AdvertisementForm = () => {
             <div className="form-card">
               <div className="form-section">
                 <label className="form-label required">
-                  제목
+                  ?�목
                 </label>
                 <input
                   type="text"
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
-                  placeholder="광고 제목을 입력하세요"
+                  placeholder="광고 ?�목???�력?�세??
                   className="form-input"
                   maxLength={200}
                   disabled={loading}
@@ -127,13 +127,13 @@ const AdvertisementForm = () => {
 
               <div className="form-section">
                 <label className="form-label required">
-                  내용
+                  ?�용
                 </label>
                 <textarea
                   name="content"
                   value={formData.content}
                   onChange={handleChange}
-                  placeholder="광고 내용을 입력하세요"
+                  placeholder="광고 ?�용???�력?�세??
                   className="form-textarea"
                   rows={8}
                   maxLength={2000}
@@ -144,18 +144,18 @@ const AdvertisementForm = () => {
 
               <div className="form-section">
                 <label className="form-label">
-                  이미지 URL
+                  ?��?지 URL
                 </label>
                 <input
                   type="text"
                   name="imageUrl"
                   value={formData.imageUrl}
                   onChange={handleChange}
-                  placeholder="이미지 URL을 입력하세요 (선택사항)"
+                  placeholder="?��?지 URL???�력?�세??(?�택?�항)"
                   className="form-input"
                   disabled={loading}
                 />
-                <span className="form-hint">광고에 사용할 이미지의 URL을 입력하세요</span>
+                <span className="form-hint">광고???�용???��?지??URL???�력?�세??/span>
               </div>
 
               <div className="form-section">
@@ -167,11 +167,11 @@ const AdvertisementForm = () => {
                   name="linkUrl"
                   value={formData.linkUrl}
                   onChange={handleChange}
-                  placeholder="링크 URL을 입력하세요 (선택사항)"
+                  placeholder="링크 URL???�력?�세??(?�택?�항)"
                   className="form-input"
                   disabled={loading}
                 />
-                <span className="form-hint">클릭 시 이동할 페이지 URL을 입력하세요</span>
+                <span className="form-hint">?�릭 ???�동???�이지 URL???�력?�세??/span>
               </div>
 
               <div className="form-section">
@@ -184,10 +184,10 @@ const AdvertisementForm = () => {
                       onChange={handleChange}
                       disabled={loading}
                     />
-                    <span className="checkbox-text">활성 상태</span>
+                    <span className="checkbox-text">?�성 ?�태</span>
                   </label>
                   <span className="form-hint">
-                    비활성 상태로 저장하면 알림 발송을 할 수 없습니다
+                    비활???�태�??�?�하�??�림 발송???????�습?�다
                   </span>
                 </div>
               </div>
@@ -206,7 +206,7 @@ const AdvertisementForm = () => {
                   className="btn-submit"
                   disabled={loading}
                 >
-                  {loading ? '처리중...' : isEditMode ? '수정' : '등록'}
+                  {loading ? '처리�?..' : isEditMode ? '?�정' : '?�록'}
                 </button>
               </div>
             </div>
@@ -218,3 +218,4 @@ const AdvertisementForm = () => {
 };
 
 export default AdvertisementForm;
+

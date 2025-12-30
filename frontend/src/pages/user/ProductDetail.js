@@ -3,11 +3,10 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { cartAPI, favoriteAPI, productAPI, qnaAPI, reviewAPI } from "../../api";
-import QnaItem from "../../components/qna/QnaItem";
-import ReviewItem from "../../components/review/ReviewItem";
+import { QnaItem, ReviewItem } from "../../components/domain";
 import "./ProductDetail.css";
   // 리뷰 - 별점 기능
-import StarRating from '../../components/StarRating.jsx';
+import { StarRating } from "../../components/common";
 
 const ProductDetail = () => {
   const { id } = useParams();
